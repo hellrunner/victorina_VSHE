@@ -22,7 +22,7 @@ def game():
 
     file = open("otchet.txt", "w")
     score = 0
-    print("-----------------------------------------------------------------------------------------------------------")
+    print("-----------------------------------------------------------")
     for i in range(len(questions_answers)):
         Q = questions_answers[i]["Q"]
         answers = "Варианты ответа на вопрос:\n"
@@ -31,6 +31,11 @@ def game():
         print(Q)
         print(answers)
         file.write("Вопрос который был задан: " + Q + "\n" + answers + "\n")
+        
+        user_A = str(input())
+        if questions_answers[i]["R_Acounter"]:
+            
+        
     file.close()
 
 
