@@ -22,8 +22,8 @@ def game():
 
     file = open("otchet.txt", "w") # создаём файл
     score = 0
-    print("-----------------------------------------------------------")
-    for i in range(len(questions_answers)):
+    print("____________________________________")
+    for i in range(len(questions_answers)): # цикл проходящий по всем вопросам
         Q = questions_answers[i]["Q"]
 
         answers = "Варианты ответа на вопрос:\n" # создаём список ответов
@@ -33,19 +33,33 @@ def game():
         print(answers)
         file.write("Вопрос который был задан: " + Q + "\n" + answers + "\n")
         
-        user_A = int(input())
+        user_A = int(input()) # ответ пользователя
         R_Acounter_mass = []
-        for j in range((questions_answers[i]["R_Acounter"])):
+        for j in range((questions_answers[i]["R_Acounter"])): # создаём список правильных ответов
             R_Acounter_mass.append(questions_answers[i]["R_A" + str(j+1)])
 
-        if user_A in R_Acounter_mass:
+        if user_A in R_Acounter_mass: # проверка на правильность ответа
             score += 1
         else:
-            pass
+            error(R_Acounter_mass, Q, answers, score)
     print(score)
             
         
     file.close()
+
+
+
+def error(R_Acounter_mass, Q, answers, score): # функция проверки на правильность ответа при ошибке
+
+    print("Ошибка, вы хотите попробовать ещё раз?\n Это будет стоить 0.5 баллa\n Ответье да или нет")
+    user_answer = str(input())
+    if user_answer == "да":
+        print(Q)
+        print(answers)
+        print("Введите правильный ответ")
+        user_A = int(input())
+        if user_A in R_Acounter_mass: # проверка на правильность ответа
+            score += 1
 
 
 if __name__ == '__main__':
