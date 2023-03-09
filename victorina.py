@@ -44,8 +44,7 @@ def game():
         else:
             error(R_Acounter_mass, Q, answers)
     print(score)
-            
-        
+    
     file.close()
 
 
