@@ -1,5 +1,5 @@
 from Q_A import questions_answers
-
+from Q_A import score
 
 
 def hi(): # функция приветствия к клиенту
@@ -18,10 +18,9 @@ def hi(): # функция приветствия к клиенту
 
 
 def game():
-
+    global score
 
     file = open("otchet.txt", "w") # создаём файл
-    score = 0
     print("____________________________________")
     for i in range(len(questions_answers)): # цикл проходящий по всем вопросам
         Q = questions_answers[i]["Q"]
@@ -33,15 +32,17 @@ def game():
         print(answers)
         file.write("Вопрос который был задан: " + Q + "\n" + answers + "\n")
         
-        user_A = int(input()) # ответ пользователя
+        user_A = str(input()) # ответ пользователя
         R_Acounter_mass = []
         for j in range((questions_answers[i]["R_Acounter"])): # создаём список правильных ответов
-            R_Acounter_mass.append(questions_answers[i]["R_A" + str(j+1)])
+            R_Acounter_mass.append(str(questions_answers[i]["R_A" + str(j+1)]))
 
         if user_A in R_Acounter_mass: # проверка на правильность ответа
-            score += 1
+            score += 10
+            file.write("Ответ который дал пользователь: " + str(user_A) + " заработано 10 баллов\n")
+
         else:
-            error(R_Acounter_mass, Q, answers, score)
+            error(R_Acounter_mass, Q, answers)
     print(score)
             
         
@@ -49,17 +50,26 @@ def game():
 
 
 
-def error(R_Acounter_mass, Q, answers, score): # функция проверки на правильность ответа при ошибке
-
-    print("Ошибка, вы хотите попробовать ещё раз?\n Это будет стоить 0.5 баллa\n Ответье да или нет")
+def error(R_Acounter_mass, Q, answers): # функция проверки на правильность ответа при ошибке
+    global score
+    file = open("otchet.txt", "a")
+    print("Ошибка, вы хотите попробовать ещё раз?\n Это будет стоить 5 баллов\n Ответье да или нет")
     user_answer = str(input())
     if user_answer == "да":
+        file.write("Пользователь согласился на повторный ответ за 5 баллов\n")
+        score -= 5
+
         print(Q)
         print(answers)
         print("Введите правильный ответ")
-        user_A = int(input())
+        user_A = str(input())
         if user_A in R_Acounter_mass: # проверка на правильность ответа
-            score += 1
+            score += 10
+            file.write("Ответ который дал пользователь: " + str(user_A) + " заработано 10 баллов\n")
+            return score
+    elif user_answer == "нет":
+        pass
+    else:
 
 
 if __name__ == '__main__':
